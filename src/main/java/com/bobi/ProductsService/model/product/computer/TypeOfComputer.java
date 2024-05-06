@@ -1,4 +1,4 @@
-package com.bobi.ProductsService.model.computer;
+package com.bobi.ProductsService.model.product.computer;
 
 public enum TypeOfComputer {
     LAPTOP,

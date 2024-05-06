@@ -1,0 +1,48 @@
+version: '3.8'
+services:
+  myapp:
+    image: products-service
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/products-service-db
+      - SPRING_DATASOURCE_USERNAME=u
+      - SPRING_DATASOURCE_PASSWORD=p
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+    networks:
+      - final-net
+
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=u
+      - POSTGRES_PASSWORD=p
+      - POSTGRES_DB=products-service-db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - final-net
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@example.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+      - PGADMIN_LISTEN_PORT=80
+    ports:
+      - "5050:80"  # PgAdmin will be accessible at http://localhost:5050
+    depends_on:
+      - db
+    networks:
+      - final-net
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  final-net:
+    driver: bridge

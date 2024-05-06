@@ -1,15 +1,13 @@
-package com.bobi.ProductsService.model.electronics;
+package com.bobi.ProductsService.model.product.electronics;
 
-import com.bobi.ProductsService.model.computer.Computer;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import com.bobi.ProductsService.model.product.ProductDTO;
+import com.bobi.ProductsService.model.product.computer.Computer;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @RequiredArgsConstructor
-public class ElectronicsDTO {
-    private final String name;
-    private final double price;
-    private final Long id;
+public class ElectronicsDTO extends ProductDTO {
     private final String brand;
     private final String type;
 
