@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "productClass")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "productJsonClass")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = ComputerDTO.class, name = "COMPUTER"),
         @JsonSubTypes.Type(value = SmartphoneDTO.class, name = "SMARTPHONE"),
@@ -22,11 +22,13 @@ public abstract class ProductDTO {
     protected Long id;
     private String name;
     private double price;
+    private ProductJsonClass productJsonClass;
     private ProductClass productClass;
 
-    public ProductDTO(String name, double price, ProductClass productClass) {
+    public ProductDTO(String name, double price, ProductJsonClass productJsonClass, ProductClass productClass) {
         this.name = name;
         this.price = price;
+        this.productJsonClass = productJsonClass;
         this.productClass = productClass;
     }
 }

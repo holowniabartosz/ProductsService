@@ -1,6 +1,7 @@
 package com.bobi.ProductsService.service;
 
 import com.bobi.ProductsService.model.product.ProductDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.List;
 
@@ -21,4 +22,6 @@ public interface ProductService {
     List<List<Record>> findComputerConfigs();
 
     List<List<Record>> findSmartphoneConfigs();
+
+    ProductDTO configureProduct(String name, List<Integer> configuration) throws JsonProcessingException;
 }

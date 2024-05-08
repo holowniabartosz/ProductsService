@@ -17,7 +17,7 @@ public class ProductValidator {
         validateIfElectronicsNull(productDTO);
     }
 
-    public static void validateIfOptionalPresent(Optional<Product> product){
+    public static void validateIfOptionalPresent(Optional<Product> product) {
         if (product.isEmpty()) {
             throw new ProductNotFound();
         }
@@ -35,22 +35,22 @@ public class ProductValidator {
     }
 
     private static void validateIfSmartphoneNull(ProductDTO productDTO) {
-        if (productDTO instanceof SmartphoneDTO){
+        if (productDTO instanceof SmartphoneDTO) {
             if (productDTO.getName() == null ||
 //                    productDTO.getProductClass() == null ||
                     ((SmartphoneDTO) productDTO).getOs() == null ||
-                    ((SmartphoneDTO) productDTO).getBrand() == null){
+                    ((SmartphoneDTO) productDTO).getBrand() == null) {
                 throw new ProductNullFieldsException();
             }
         }
     }
 
     private static void validateIfElectronicsNull(ProductDTO productDTO) {
-        if (productDTO instanceof ElectronicsDTO){
+        if (productDTO instanceof ElectronicsDTO) {
             if (productDTO.getName() == null ||
 //                    productDTO.getProductClass() == null ||
                     ((ElectronicsDTO) productDTO).getType() == null ||
-                    ((ElectronicsDTO) productDTO).getBrand() == null){
+                    ((ElectronicsDTO) productDTO).getBrand() == null) {
                 throw new ProductNullFieldsException();
             }
         }

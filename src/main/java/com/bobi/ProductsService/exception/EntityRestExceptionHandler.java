@@ -1,5 +1,6 @@
 package com.bobi.ProductsService.exception;
 
+import com.bobi.ProductsService.exception.exc.ProductNotConfigurable;
 import com.bobi.ProductsService.exception.exc.ProductNotFound;
 import com.bobi.ProductsService.exception.exc.ProductNullFieldsException;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,16 @@ public class EntityRestExceptionHandler {
 
     @ExceptionHandler(ProductNotFound.class)
     public ResponseEntity<ErrorResponse> handleException(ProductNotFound exc) {
+
+        ErrorResponse error = errorResponseGenerator(
+                exc.getMessage(),
+                HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ProductNotConfigurable.class)
+    public ResponseEntity<ErrorResponse> handleException(ProductNotConfigurable exc) {
 
         ErrorResponse error = errorResponseGenerator(
                 exc.getMessage(),

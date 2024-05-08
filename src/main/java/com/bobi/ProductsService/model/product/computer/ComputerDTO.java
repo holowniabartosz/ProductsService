@@ -22,36 +22,37 @@ public class ComputerDTO extends ProductDTO implements Configurable {
 
     @Override
     public Configurable configure(Record... args) {
-        if (args.length >= 2) {
-            if (args[0] instanceof RamGB) {
-                this.setRamGB((RamGB) args[0]);
-            } else {
-                throw new IllegalArgumentException("Invalid argument type for RamGB at position 1");
-            }
-            if (args[1] instanceof CPU) {
-                this.setCpu((CPU) args[1]);
-            } else {
-                throw new IllegalArgumentException("Invalid argument type for CPU at position 2");
-            }
+        if (!(args.length == 2)) {
+            throw new IllegalArgumentException("Incomplete or excessive configuration");
+        }
+        if (args[0] instanceof RamGB) {
+            this.setRamGB((RamGB) args[0]);
+        } else {
+            throw new IllegalArgumentException("Invalid argument type for RamGB at position 1");
+        }
+        if (args[1] instanceof CPU) {
+            this.setCpu((CPU) args[1]);
+        } else {
+            throw new IllegalArgumentException("Invalid argument type for CPU at position 2");
         }
         return this;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
+@Override
+public boolean equals(Object o) {
+    if (this == o) return true;
 
-        if (!(o instanceof Computer))
-            return false;
+    if (!(o instanceof Computer))
+        return false;
 
-        Computer other = (Computer) o;
+    Computer other = (Computer) o;
 
-        return id != null &&
-                id.equals(other.getId());
-    }
+    return id != null &&
+            id.equals(other.getId());
+}
 
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
+@Override
+public int hashCode() {
+    return getClass().hashCode();
+}
 }

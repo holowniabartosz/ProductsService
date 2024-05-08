@@ -2,8 +2,10 @@ package com.bobi.ProductsService.service;
 
 import com.bobi.ProductsService.model.product.Product;
 import com.bobi.ProductsService.model.product.ProductDTO;
+import com.bobi.ProductsService.model.product.computer.CPU.CPU;
 import com.bobi.ProductsService.model.product.computer.Computer;
 import com.bobi.ProductsService.model.product.computer.ComputerDTO;
+import com.bobi.ProductsService.model.product.computer.ramGB.RamGB;
 import com.bobi.ProductsService.model.product.electronics.Electronics;
 import com.bobi.ProductsService.model.product.electronics.ElectronicsDTO;
 import com.bobi.ProductsService.model.product.mapper.ComputerMapper;
@@ -11,8 +13,12 @@ import com.bobi.ProductsService.model.product.mapper.ElectronicsMapper;
 import com.bobi.ProductsService.model.product.mapper.SmartphoneMapper;
 import com.bobi.ProductsService.model.product.smartphone.Smartphone;
 import com.bobi.ProductsService.model.product.smartphone.SmartphoneDTO;
+import com.bobi.ProductsService.model.product.smartphone.battery.Battery;
+import com.bobi.ProductsService.model.product.smartphone.colour.Colour;
 import com.bobi.ProductsService.model.product.validator.ProductValidator;
 import com.bobi.ProductsService.repository.ProductRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityExistsException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,6 +40,7 @@ public class ProductServiceImpl implements ProductService {
     private ComputerMapper computerMapper;
     private SmartphoneMapper smartphoneMapper;
     private ElectronicsMapper electronicsMapper;
+    private ObjectMapper objectMapper;
 
     @Override
     public List<ProductDTO> findAll() {
@@ -58,7 +65,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO save(ProductDTO productDTO) {
-        if (productRepository.findByName(productDTO.getName()).isPresent()){
+        if (productRepository.findByName(productDTO.getName()).isPresent()) {
             throw new EntityExistsException("Product with this name is present in the database");
         }
         ProductValidator.validateIfNull(productDTO);
@@ -80,15 +87,15 @@ public class ProductServiceImpl implements ProductService {
         var productToUpadate = optionalOfProductToUpdate.get();
         productToUpadate.setPrice(productDTO.getPrice());
         productToUpadate.setName(productDTO.getName());
-        if(productToUpadate instanceof Computer && productDTO instanceof ComputerDTO) {
+        if (productToUpadate instanceof Computer && productDTO instanceof ComputerDTO) {
             ((Computer) productToUpadate).setType(((ComputerDTO) productDTO).getType());
             ((Computer) productToUpadate).setBrand(((ComputerDTO) productDTO).getBrand());
         }
-        if(productToUpadate instanceof Smartphone && productDTO instanceof SmartphoneDTO) {
+        if (productToUpadate instanceof Smartphone && productDTO instanceof SmartphoneDTO) {
             ((Smartphone) productToUpadate).setOs(((SmartphoneDTO) productDTO).getOs());
             ((Smartphone) productToUpadate).setBrand(((SmartphoneDTO) productDTO).getBrand());
         }
-        if(productToUpadate instanceof Electronics && productDTO instanceof ElectronicsDTO) {
+        if (productToUpadate instanceof Electronics && productDTO instanceof ElectronicsDTO) {
             ((Electronics) productToUpadate).setType(((ElectronicsDTO) productDTO).getType());
             ((Electronics) productToUpadate).setBrand(((ElectronicsDTO) productDTO).getBrand());
         }
@@ -117,6 +124,34 @@ public class ProductServiceImpl implements ProductService {
         smartphoneConfigs.add(colourConfigs);
 
         return smartphoneConfigs;
+    }
+
+    @Override
+    public ProductDTO configureProduct(String name, List<Integer> configuration) {
+        var product = findByName(name);
+        try {
+            switch (product.getProductClass()) {
+                case COMPUTER:
+                    ComputerDTO computerDTO = (ComputerDTO) product;
+                    var RamGBConfig = RAM_CONFIGS.get(configuration.get(0));
+                    var CPUConfig = CPU_CONFIGS.get(configuration.get(1));
+                    computerDTO.configure(RamGBConfig, CPUConfig);
+                    return computerDTO;
+                case SMARTPHONE:
+                    SmartphoneDTO smartphoneDTO = (SmartphoneDTO) product;
+                    var BatteryConfig = BATTERY_CONFIGS.get(configuration.get(0));
+                    var ColourConfig = COLOUR_CONFIGS.get(configuration.get(1));
+                    smartphoneDTO.configure(BatteryConfig, ColourConfig);
+                    return smartphoneDTO;
+                default:
+                    return (ElectronicsDTO) product;
+            }
+        } catch (Exception e) {
+            // Handle exceptions, e.g., IOException from readValue or IndexOutOfBoundsException if
+            // configuration list is incomplete
+            System.err.println("Error configuring product: " + e.getMessage());
+            return null;
+        }
     }
 
     private ProductDTO mapProductToDTO(Product product) {

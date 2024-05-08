@@ -2,6 +2,7 @@ package com.bobi.ProductsService.controller;
 
 import com.bobi.ProductsService.model.product.ProductDTO;
 import com.bobi.ProductsService.service.ProductService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -61,6 +62,22 @@ public class ProductController {
         return productService.findByName(name);
     }
 
+    @Operation(summary = "Configure a configurable product")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found and configured the product",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProductDTO.class))
+                    }),
+            @ApiResponse(responseCode = "500", description = "Invalid argument type",
+                    content = @Content),
+            @ApiResponse(responseCode = "400", description = "Product not configurable",
+                    content = @Content)
+    })
+    @PostMapping("/{name}/configure")
+    public ProductDTO configureProduct(@PathVariable String name, @RequestBody List<Integer> configuration) throws JsonProcessingException {
+        return productService.configureProduct(name, configuration);
+    }
+
     @Operation(summary = "Get the list of all computer configs")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "List of all possible computer configurations returned",
@@ -109,7 +126,7 @@ public class ProductController {
             @ApiResponse(responseCode = "404", description = "Entity not found",
                     content = @Content)
     })
-    @DeleteMapping("/name/{name}")
+    @DeleteMapping("/{name}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public String deleteByName(@PathVariable String name) {
         productService.deleteByName(name);
@@ -125,7 +142,7 @@ public class ProductController {
             @ApiResponse(responseCode = "404", description = "Entity not found",
                     content = @Content)
     })
-    @PutMapping("/name/{name}")
+    @PutMapping("/{name}")
     public ProductDTO update(@PathVariable String name, @RequestBody ProductDTO productDTO) {
         productService.update(name, productDTO);
         return productService.findByName(productDTO.getName());

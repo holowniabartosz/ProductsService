@@ -11,11 +11,13 @@ import org.mapstruct.MappingTarget;
 public interface ElectronicsMapper {
 
     @Mapping(target = "name", ignore = true)  // Ignore during automatic mapping
-    @Mapping(target = "price", ignore = true) // Ignore during automatic mapping
+    @Mapping(target = "price", ignore = true)
+        // Ignore during automatic mapping
     ElectronicsDTO toDTO(Electronics electronics);
 
     @Mapping(target = "name", ignore = true)  // Ignore during automatic mapping
-    @Mapping(target = "price", ignore = true) // Ignore during automatic mapping
+    @Mapping(target = "price", ignore = true)
+        // Ignore during automatic mapping
     Electronics toElectronics(ElectronicsDTO electronicsDTO);
 
     @AfterMapping
