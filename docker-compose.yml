@@ -61,6 +61,20 @@ services:
     networks:
       - final-net
 
+  orders-service:
+    image: orders-service
+    environment:
+      - SPRING_REDIS_HOST=redis
+      - SPRING_REDIS_PORT=6379
+      - SPRING_REDIS_PASSWORD=p
+    depends_on:
+      - shopping-cart-service
+      - redis
+    ports:
+      - "8010:8010"
+    networks:
+      - final-net
+
 volumes:
   postgres_data:
     driver: local
