@@ -12,12 +12,8 @@ import lombok.*;
 @AllArgsConstructor
 @Table(name = "electronics")
 public class Electronics extends Product {
-    //    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(nullable = false, unique = true)
-//    private Long id;
-    private String brand;
-    private String type;
+    private String electronicsBrand;
+    private String electronicsType;
 
     @Override
     public boolean equals(Object o) {

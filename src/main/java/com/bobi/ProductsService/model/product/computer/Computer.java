@@ -16,8 +16,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "computer")
 public class Computer extends Product {
-    private String brand;
-    private TypeOfComputer type;
+    private String computerBrand;
+    private ComputerType computerType;
     @Embedded
     private RamGB ramGB;
     @Embedded

@@ -2,10 +2,8 @@ package com.bobi.ProductsService.service;
 
 import com.bobi.ProductsService.model.product.Product;
 import com.bobi.ProductsService.model.product.ProductDTO;
-import com.bobi.ProductsService.model.product.computer.CPU.CPU;
 import com.bobi.ProductsService.model.product.computer.Computer;
 import com.bobi.ProductsService.model.product.computer.ComputerDTO;
-import com.bobi.ProductsService.model.product.computer.ramGB.RamGB;
 import com.bobi.ProductsService.model.product.electronics.Electronics;
 import com.bobi.ProductsService.model.product.electronics.ElectronicsDTO;
 import com.bobi.ProductsService.model.product.mapper.ComputerMapper;
@@ -13,11 +11,8 @@ import com.bobi.ProductsService.model.product.mapper.ElectronicsMapper;
 import com.bobi.ProductsService.model.product.mapper.SmartphoneMapper;
 import com.bobi.ProductsService.model.product.smartphone.Smartphone;
 import com.bobi.ProductsService.model.product.smartphone.SmartphoneDTO;
-import com.bobi.ProductsService.model.product.smartphone.battery.Battery;
-import com.bobi.ProductsService.model.product.smartphone.colour.Colour;
 import com.bobi.ProductsService.model.product.validator.ProductValidator;
 import com.bobi.ProductsService.repository.ProductRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityExistsException;
 import lombok.AllArgsConstructor;
@@ -88,16 +83,16 @@ public class ProductServiceImpl implements ProductService {
         productToUpadate.setPrice(productDTO.getPrice());
         productToUpadate.setName(productDTO.getName());
         if (productToUpadate instanceof Computer && productDTO instanceof ComputerDTO) {
-            ((Computer) productToUpadate).setType(((ComputerDTO) productDTO).getType());
-            ((Computer) productToUpadate).setBrand(((ComputerDTO) productDTO).getBrand());
+            ((Computer) productToUpadate).setComputerType(((ComputerDTO) productDTO).getComputerType());
+            ((Computer) productToUpadate).setComputerBrand(((ComputerDTO) productDTO).getComputerBrand());
         }
         if (productToUpadate instanceof Smartphone && productDTO instanceof SmartphoneDTO) {
             ((Smartphone) productToUpadate).setOs(((SmartphoneDTO) productDTO).getOs());
-            ((Smartphone) productToUpadate).setBrand(((SmartphoneDTO) productDTO).getBrand());
+            ((Smartphone) productToUpadate).setSmartphoneBrand(((SmartphoneDTO) productDTO).getSmartphoneBrand());
         }
         if (productToUpadate instanceof Electronics && productDTO instanceof ElectronicsDTO) {
-            ((Electronics) productToUpadate).setType(((ElectronicsDTO) productDTO).getType());
-            ((Electronics) productToUpadate).setBrand(((ElectronicsDTO) productDTO).getBrand());
+            ((Electronics) productToUpadate).setElectronicsType(((ElectronicsDTO) productDTO).getElectronicsType());
+            ((Electronics) productToUpadate).setElectronicsBrand(((ElectronicsDTO) productDTO).getElectronicsBrand());
         }
         return mapProductToDTO(productRepository.save(productToUpadate));
     }

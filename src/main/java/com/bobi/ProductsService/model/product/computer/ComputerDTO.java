@@ -13,8 +13,8 @@ import lombok.Setter;
 @Setter
 @RequiredArgsConstructor
 public class ComputerDTO extends ProductDTO implements Configurable {
-    private final String brand;
-    private final TypeOfComputer type;
+    private final String computerBrand;
+    private final ComputerType computerType;
     @Embedded
     private RamGB ramGB;
     @Embedded
@@ -38,21 +38,21 @@ public class ComputerDTO extends ProductDTO implements Configurable {
         return this;
     }
 
-@Override
-public boolean equals(Object o) {
-    if (this == o) return true;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
 
-    if (!(o instanceof Computer))
-        return false;
+        if (!(o instanceof Computer))
+            return false;
 
-    Computer other = (Computer) o;
+        Computer other = (Computer) o;
 
-    return id != null &&
-            id.equals(other.getId());
-}
+        return id != null &&
+                id.equals(other.getId());
+    }
 
-@Override
-public int hashCode() {
-    return getClass().hashCode();
-}
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

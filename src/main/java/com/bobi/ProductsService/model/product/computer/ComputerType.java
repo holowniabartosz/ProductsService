@@ -1,6 +1,6 @@
 package com.bobi.ProductsService.model.product.computer;
 
-public enum TypeOfComputer {
+public enum ComputerType {
     LAPTOP,
     PC,
     GAMING_PC

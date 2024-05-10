@@ -8,8 +8,8 @@ import lombok.*;
 @Setter
 @RequiredArgsConstructor
 public class ElectronicsDTO extends ProductDTO {
-    private final String brand;
-    private final String type;
+    private final String electronicsBrand;
+    private final String electronicsType;
 
     @Override
     public boolean equals(Object o) {

@@ -15,11 +15,7 @@ import lombok.*;
 @AllArgsConstructor
 @Table(name = "smartphone")
 public class Smartphone extends Product {
-    //    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(nullable = false, unique = true)
-//    private Long id;
-    private String brand;
+    private String smartphoneBrand;
     private OS os;
     @Embedded
     private Battery battery;

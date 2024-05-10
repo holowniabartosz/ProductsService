@@ -10,25 +10,23 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "productJsonClass")
+@NoArgsConstructor
+@JsonTypeInfo(use = JsonTypeInfo.Id.DEDUCTION)
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = ComputerDTO.class, name = "COMPUTER"),
-        @JsonSubTypes.Type(value = SmartphoneDTO.class, name = "SMARTPHONE"),
-        @JsonSubTypes.Type(value = ElectronicsDTO.class, name = "ELECTRONICS")
+        @JsonSubTypes.Type(value = ComputerDTO.class),
+        @JsonSubTypes.Type(value = SmartphoneDTO.class),
+        @JsonSubTypes.Type(value = ElectronicsDTO.class)
 })
 public abstract class ProductDTO {
+    private ProductClass productClass;
     protected Long id;
     private String name;
     private double price;
-    private ProductJsonClass productJsonClass;
-    private ProductClass productClass;
 
-    public ProductDTO(String name, double price, ProductJsonClass productJsonClass, ProductClass productClass) {
+    public ProductDTO(String name, double price, ProductClass productClass) {
+        this.productClass = productClass;
         this.name = name;
         this.price = price;
-        this.productJsonClass = productJsonClass;
-        this.productClass = productClass;
     }
 }

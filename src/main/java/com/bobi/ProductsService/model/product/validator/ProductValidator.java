@@ -26,9 +26,8 @@ public class ProductValidator {
     private static void validateIfComputerNull(ProductDTO productDTO) {
         if (productDTO instanceof ComputerDTO) {
             if (productDTO.getName() == null ||
-//                    productDTO.getProductClass() == null ||
-                    ((ComputerDTO) productDTO).getType() == null ||
-                    ((ComputerDTO) productDTO).getBrand() == null) {
+                    ((ComputerDTO) productDTO).getComputerType() == null ||
+                    ((ComputerDTO) productDTO).getComputerBrand() == null) {
                 throw new ProductNullFieldsException();
             }
         }
@@ -39,7 +38,7 @@ public class ProductValidator {
             if (productDTO.getName() == null ||
 //                    productDTO.getProductClass() == null ||
                     ((SmartphoneDTO) productDTO).getOs() == null ||
-                    ((SmartphoneDTO) productDTO).getBrand() == null) {
+                    ((SmartphoneDTO) productDTO).getSmartphoneBrand() == null) {
                 throw new ProductNullFieldsException();
             }
         }
@@ -49,8 +48,8 @@ public class ProductValidator {
         if (productDTO instanceof ElectronicsDTO) {
             if (productDTO.getName() == null ||
 //                    productDTO.getProductClass() == null ||
-                    ((ElectronicsDTO) productDTO).getType() == null ||
-                    ((ElectronicsDTO) productDTO).getBrand() == null) {
+                    ((ElectronicsDTO) productDTO).getElectronicsType() == null ||
+                    ((ElectronicsDTO) productDTO).getElectronicsBrand() == null) {
                 throw new ProductNullFieldsException();
             }
         }

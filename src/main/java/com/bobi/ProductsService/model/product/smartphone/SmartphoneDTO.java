@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 @RequiredArgsConstructor
 public class SmartphoneDTO extends ProductDTO implements Configurable {
-    private final String brand;
+    private final String smartphoneBrand;
     private final OS os;
     @Embedded
     private Battery battery;
