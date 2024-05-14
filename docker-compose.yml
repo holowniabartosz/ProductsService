@@ -46,6 +46,8 @@ services:
       - "6379:6379"
     networks:
       - final-net
+    volumes:
+      - redis_data:/data
 
   shopping-cart-service:
     image: shopping-cart-service
@@ -77,6 +79,8 @@ services:
 
 volumes:
   postgres_data:
+    driver: local
+  redis_data:
     driver: local
 
 networks:
